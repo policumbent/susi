@@ -1,6 +1,7 @@
 //
 // Created by rikyc on 01/03/2022.
 //
+#include <Arduino.h>
 
 #include "Gear.h"
 #include <EEPROM.h>

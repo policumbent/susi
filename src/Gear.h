@@ -1,6 +1,7 @@
 //
 // Created by rikyc on 01/03/2022.
 //
+#include <Arduino.h>
 
 #ifndef TEST_GEAR_H
 #define TEST_GEAR_H
