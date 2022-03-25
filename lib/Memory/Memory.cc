@@ -38,18 +38,18 @@ MemGear Memory::load_gear() {
  */
 void Memory::save_config(const GearVec &servo1, const GearVec &servo2) {
   prefs.begin("config_servo1", false);
-  prefs.begin("config_servo2", false);
-
   prefs.putBytes("config_servo1", servo1.data(), servo1.size() * sizeof(Gear));
-  prefs.putBytes("config_servo2", servo2.data(), servo2.size() * sizeof(Gear));
+  prefs.end();
 
+  prefs.begin("config_servo2", false);
+  prefs.putBytes("config_servo2", servo2.data(), servo2.size() * sizeof(Gear));
   prefs.end();
 }
 
 /**
  * Retrive gears configuration
  *
- * @return configuration of motor2
+ * @return configuration of motor1
  */
 GearVec Memory::load_config_servo1() {
   auto vec = GearVec{MAX_GEAR};
