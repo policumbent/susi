@@ -1,8 +1,8 @@
 #pragma once
 
+#include "Gear.h"
 #include <Arduino.h>
 #include <Preferences.h>
-#include "Gear.h"
 
 /**
  * Gear information saved on memory
@@ -20,11 +20,11 @@ struct MemGear {
 /**
  * Abstraction layer for flash memory operations
  */
-namespace Memory{
-  void save_gear(const MemGear &value);
-  MemGear load_gear();
+namespace Memory {
+void save_gear(const MemGear &value);
+MemGear load_gear();
 
-  void save_config(const GearVec& servo1, const GearVec& servo2);
-  GearVec load_config_servo1();
-  GearVec load_config_servo2();
-}
+void save_config(const GearVec &servo1, const GearVec &servo2);
+GearVec load_config_servo1();
+GearVec load_config_servo2();
+} // namespace Memory

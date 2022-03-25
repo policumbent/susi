@@ -7,16 +7,15 @@
 const char *ssid = "Prova";
 const char *password = "";
 
-
 Calibration::Calibration(GearVec *s1, GearVec *s2) {
-    servo1 = std::unique_ptr<GearVec>(s1);
-    servo2 = std::unique_ptr<GearVec>(s2);
+  servo1 = std::unique_ptr<GearVec>(s1);
+  servo2 = std::unique_ptr<GearVec>(s2);
 
-    pinMode(LED_BUILTIN, OUTPUT);
-    digitalWrite(LED_BUILTIN, LOW);
+  pinMode(LED_BUILTIN, OUTPUT);
+  digitalWrite(LED_BUILTIN, LOW);
 }
 
-void Calibration::init(){
+void Calibration::init() {
   server.onNotFound([](AsyncWebServerRequest *request) {
     request->send(404, "text/plain", "API Not Found");
   });
@@ -42,7 +41,7 @@ void Calibration::init(){
   // GET /api/gear/configuration
   server.on("/api/gear/configuration", HTTP_GET,
             [this](AsyncWebServerRequest *request) {
-              auto response = new AsyncJsonResponse();
+              auto response = new AsyncJsonResponse(false, 2048);
               auto json = response->getRoot();
 
               json["servo1"] = *this->servo1;
@@ -59,16 +58,16 @@ void Calibration::init(){
       "/api/gear/configuration",
       [this](AsyncWebServerRequest *request, JsonVariant &body) {
         // check invalid request
-        if (request->method() != HTTP_POST ||
-            !body.containsKey("servo1") || !body.containsKey("servo2") ||
-            !body["servo1"].is<GearVec>() || !body["servo2"].is<GearVec>()) {
+        if (request->method() != HTTP_POST || !body.containsKey("servo1") ||
+            !body.containsKey("servo2") || !body["servo1"].is<GearVec>() ||
+            !body["servo2"].is<GearVec>()) {
           request->send(403);
           return;
         }
 
         try {
           *this->servo1 = body["servo1"].as<GearVec>();
-          *this->servo2 = body["servo1"].as<GearVec>();
+          *this->servo2 = body["servo2"].as<GearVec>();
 
           Memory::save_config(*this->servo1, *this->servo2);
 
@@ -76,7 +75,10 @@ void Calibration::init(){
         } catch (...) {
           request->send(502);
         }
-      }));
+      },
+      2048));
+  //  server.on("/api/gear/configuration", HTTP_POST,[](AsyncWebServerRequest
+  //  *request){ request->send(202, "text", "ciao");});
 
   // GET /api/gear?id=<int:gear_id>
   server.on("/api/gear", HTTP_GET, [this](AsyncWebServerRequest *request) {
@@ -89,7 +91,7 @@ void Calibration::init(){
     }
 
     auto id = request->getParam("id")->value().toInt();
-    auto response = new AsyncJsonResponse();
+    auto response = new AsyncJsonResponse(false, 2048);
     auto json = response->getRoot();
 
     json["servo1"] = (*this->servo1)[id - 1];
@@ -109,7 +111,7 @@ void Calibration::init(){
             !request->hasParam("id") ||
             request->getParam("id")->value().toInt() < MIN_GEAR ||
             request->getParam("id")->value().toInt() > MAX_GEAR ||
-            !body.containsKey("servo1") || !body["servo1"].is<Gear>()||
+            !body.containsKey("servo1") || !body["servo1"].is<Gear>() ||
             !body.containsKey("servo2") || !body["servo2"].is<Gear>()) {
           request->send(422);
           return;
@@ -125,7 +127,8 @@ void Calibration::init(){
         } catch (...) {
           request->send(502);
         }
-      }));
+      },
+      2048));
 
   /** STATIC FILES **/
 
@@ -135,7 +138,7 @@ void Calibration::init(){
 bool Calibration::isActive() const { return _isActive; }
 
 void Calibration::begin() {
-  if (!_isActive){
+  if (!_isActive) {
     WiFiClass::mode(WIFI_AP);
     WiFi.softAP(ssid, password);
     SPIFFS.begin();

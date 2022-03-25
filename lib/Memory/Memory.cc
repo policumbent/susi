@@ -55,7 +55,8 @@ GearVec Memory::load_config_servo1() {
   auto vec = GearVec{MAX_GEAR};
 
   prefs.begin("config_servo1", false);
-  if (prefs.isKey("config_servo1") && prefs.getBytesLength("config_servo1") == vec.size() * sizeof(Gear)) {
+  if (prefs.isKey("config_servo1") &&
+      prefs.getBytesLength("config_servo1") == vec.size() * sizeof(Gear)) {
     prefs.getBytes("config_servo1", vec.data(), vec.size() * sizeof(Gear));
   }
   prefs.end();
@@ -72,7 +73,8 @@ GearVec Memory::load_config_servo2() {
   auto vec = GearVec{MAX_GEAR};
 
   prefs.begin("config_servo2", false);
-  if (prefs.isKey("config_servo2") &&  prefs.getBytesLength("config_servo2") == vec.size() * sizeof(Gear)) {
+  if (prefs.isKey("config_servo2") &&
+      prefs.getBytesLength("config_servo2") == vec.size() * sizeof(Gear)) {
     prefs.getBytes("config_servo2", vec.data(), vec.size() * sizeof(Gear));
   }
   prefs.end();

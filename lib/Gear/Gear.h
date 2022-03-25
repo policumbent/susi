@@ -13,8 +13,8 @@ const uint8_t SERVO = 2;
  * @param pos_down indicate the high->low gear change (es. from 2^ gear to 1^)
  */
 struct Position {
-  uint pos_up;
-  uint pos_down;
+  uint up;
+  uint down;
 };
 
 /**
@@ -28,8 +28,8 @@ public:
   uint8_t id = 0;
   Position pos = {0, 0};
 
-  Gear()=default;
-  Gear(uint i, Position pos):id(i), pos(pos){};
+  Gear() = default;
+  Gear(uint i, Position pos) : id(i), pos(pos){};
 
   uint shift_up() const;
   uint shift_down() const;

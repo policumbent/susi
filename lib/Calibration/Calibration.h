@@ -35,8 +35,8 @@ public:
 namespace ARDUINOJSON_NAMESPACE {
 template <> struct Converter<Position> {
   static void toJson(const Position &src, JsonVariant dst) {
-    dst["up"] = src.pos_up;
-    dst["down"] = src.pos_down;
+    dst["up"] = src.up;
+    dst["down"] = src.down;
   }
 
   static Position fromJson(JsonVariantConst src) {
@@ -59,8 +59,9 @@ template <> struct Converter<Gear> {
   }
 
   static bool checkJson(JsonVariantConst src) {
-    return src["position"].is<Position>() && src["id"].is<uint8_t>()
-        && src["id"].as<uint8_t>() >= MIN_GEAR && src["id"].as<uint8_t>() <= MAX_GEAR;
+    return src["position"].is<Position>() && src["id"].is<uint8_t>() &&
+           src["id"].as<uint8_t>() >= MIN_GEAR &&
+           src["id"].as<uint8_t>() <= MAX_GEAR;
   }
 };
 
@@ -85,7 +86,7 @@ template <> struct Converter<GearVec> {
     }
 
     for (auto i = 0; i < src.size(); i++) {
-      if (!src[i].is<Gear>() || src[i].as<Gear>().id != i+1) {
+      if (!src[i].is<Gear>() || src[i].as<Gear>().id != i + 1) {
         return false;
       }
     }

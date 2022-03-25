@@ -11,8 +11,8 @@ const uint8_t pin_servo2 = 27;
 BfButton btn_shift_up(BfButton::STANDALONE_DIGITAL, 12, true, FALLING);
 BfButton btn_shift_down(BfButton::STANDALONE_DIGITAL, 14, true, FALLING);
 
-auto vec_servo1 = GearVec{};
-auto vec_servo2 = GearVec{};
+auto vec_servo1 = GearVec{MAX_GEAR};
+auto vec_servo2 = GearVec{MAX_GEAR};
 auto cal = Calibration{&vec_servo1, &vec_servo2};
 auto servo1 = Servo{};
 auto servo2 = Servo{};
@@ -20,7 +20,8 @@ auto servo2 = Servo{};
 uint8_t current_gear_id = 0;
 
 void btn_callback(BfButton *btn, BfButton::press_pattern_t pattern) {
-  if (btn->getID() == btn_shift_down.getID() && pattern == BfButton::SINGLE_PRESS && current_gear_id > MIN_GEAR) {
+  if (btn->getID() == btn_shift_down.getID() &&
+      pattern == BfButton::SINGLE_PRESS && current_gear_id > MIN_GEAR) {
 
     auto id = --current_gear_id;
     auto pos1 = vec_servo1[id - 1].shift_down();
@@ -29,7 +30,8 @@ void btn_callback(BfButton *btn, BfButton::press_pattern_t pattern) {
     servo1.write(static_cast<int>(pos1));
     servo2.write(static_cast<int>(pos2));
     Memory::save_gear(MemGear{id, pos1, pos2});
-  } else if (btn->getID() == btn_shift_up.getID() && pattern == BfButton::SINGLE_PRESS && current_gear_id < MAX_GEAR) {
+  } else if (btn->getID() == btn_shift_up.getID() &&
+             pattern == BfButton::SINGLE_PRESS && current_gear_id < MAX_GEAR) {
 
     auto id = ++current_gear_id;
     auto pos1 = vec_servo1[id - 1].shift_up();
@@ -38,7 +40,8 @@ void btn_callback(BfButton *btn, BfButton::press_pattern_t pattern) {
     servo1.write(static_cast<int>(pos1));
     servo2.write(static_cast<int>(pos2));
     Memory::save_gear(MemGear{id, pos1, pos2});
-  } else if (btn->getID() == btn_shift_up.getID() && pattern == BfButton::LONG_PRESS) {
+  } else if (btn->getID() == btn_shift_up.getID() &&
+             pattern == BfButton::LONG_PRESS) {
     cal.isActive() ? cal.end() : cal.begin();
   }
 }
