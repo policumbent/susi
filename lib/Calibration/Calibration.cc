@@ -7,13 +7,13 @@
 const char *ssid = "Prova";
 const char *password = "";
 
-const uint8_t pin_led = 2;
 
 Calibration::Calibration(GearVec *s1, GearVec *s2) {
     servo1 = std::unique_ptr<GearVec>(s1);
     servo2 = std::unique_ptr<GearVec>(s2);
 
-    pinMode(pin_led, OUTPUT);
+    pinMode(LED_BUILTIN, OUTPUT);
+    digitalWrite(LED_BUILTIN, LOW);
 }
 
 void Calibration::init(){
@@ -140,7 +140,7 @@ void Calibration::begin() {
     WiFi.softAP(ssid, password);
     SPIFFS.begin();
 
-    init();
+    this->init();
     server.begin();
 
     _isActive = true;
@@ -153,7 +153,7 @@ void Calibration::end() {
     server.end();
     server.reset();
     SPIFFS.end();
-    WiFi.softAPdisconnect();
+    WiFi.softAPdisconnect(true);
 
     _isActive = false;
     digitalWrite(LED_BUILTIN, LOW);
