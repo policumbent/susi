@@ -77,8 +77,6 @@ void Calibration::init() {
         }
       },
       2048));
-  //  server.on("/api/gear/configuration", HTTP_POST,[](AsyncWebServerRequest
-  //  *request){ request->send(202, "text", "ciao");});
 
   // GET /api/gear?id=<int:gear_id>
   server.on("/api/gear", HTTP_GET, [this](AsyncWebServerRequest *request) {
