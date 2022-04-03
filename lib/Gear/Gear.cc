@@ -1,5 +1,15 @@
 #include "Gear.h"
 
-uint Gear::shift_up() const { return static_cast<int>(this->pos.up); }
+/**
+ * Retrive low->high gear position
+ *
+ * @return position
+ */
+uint Gear::shift_up() const { return this->pos.up; }
 
-uint Gear::shift_down() const { return static_cast<int>(this->pos.down); }
+/**
+ * Retrive high->low gear position
+ *
+ * @return position
+ */
+uint Gear::shift_down() const { return this->pos.down; }
