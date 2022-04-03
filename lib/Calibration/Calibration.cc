@@ -4,9 +4,6 @@
 #include <WiFi.h>
 #include <WiFiAP.h>
 
-const char *ssid = "Prova";
-const char *password = "";
-
 Calibration::Calibration(GearVec *s1, GearVec *s2) {
   servo1 = std::unique_ptr<GearVec>(s1);
   servo2 = std::unique_ptr<GearVec>(s2);
@@ -27,7 +24,7 @@ void Calibration::init() {
     auto response = new AsyncJsonResponse();
     auto json = response->getRoot();
 
-    json["name"] = "TaurusX";
+    json["name"] = BIKE_NAME;
     json["servo"] = SERVO;
     json["gear"] = MAX_GEAR;
     json["last_calibration"] = nullptr;
@@ -138,7 +135,7 @@ bool Calibration::isActive() const { return _isActive; }
 void Calibration::begin() {
   if (!_isActive) {
     WiFiClass::mode(WIFI_AP);
-    WiFi.softAP(ssid, password);
+    WiFi.softAP(WIFI_SSID, WIFI_PASS);
     SPIFFS.begin();
 
     this->init();

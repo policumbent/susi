@@ -4,7 +4,6 @@
 
 const uint8_t MIN_GEAR = 1;
 const uint8_t MAX_GEAR = 11;
-const uint8_t SERVO = 2;
 
 /**
  * Define the relative position of the servo
