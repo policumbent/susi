@@ -16,7 +16,7 @@ auto cal = Calibration{&vec_servo1, &vec_servo2};
 
 uint8_t current_gear_id = 0;
 
-void btn_callback(BfButton *btn, BfButton::press_pattern_t pattern) {
+void IRAM_ATTR btn_callback(BfButton *btn, BfButton::press_pattern_t pattern) {
   if (btn->getID() == btn_shift_down.getID() &&
       pattern == BfButton::SINGLE_PRESS && current_gear_id > MIN_GEAR) {
 
