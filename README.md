@@ -46,4 +46,4 @@ e andare all'indirizzo locale `192.168.4.1` per avviare l'interfaccia.
 
 ## Licence
 
-...
+[GPLv3](LICENSE)
