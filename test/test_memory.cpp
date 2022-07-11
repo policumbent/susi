@@ -2,6 +2,17 @@
 #include <unity.h>
 
 #include "Memory.h"
+#include "Gear.h"
+
+void test_gear_vec() {
+  auto vec = GearVec{};
+
+  vec.fill();
+
+  for (uint i = 0; i < vec.size(); i++) {
+    TEST_ASSERT_EQUAL(vec[i].id, i + 1);
+  }
+}
 
 void test_save_gear() {
   auto gear = MemGear{1, 155, 255};
@@ -16,11 +27,11 @@ void test_save_gear() {
 }
 
 void test_save_config() {
-  auto vec1 = GearVec{MAX_GEAR};
+  auto vec1 = GearVec{};
   for (uint i = 0; i < MAX_GEAR; i++) {
     vec1[i] = Gear{i + 1, {(i + 1) * 10, (i + 1) * 12}};
   }
-  auto vec2 = GearVec{MAX_GEAR};
+  auto vec2 = GearVec{};
   for (uint i = 0; i < MAX_GEAR; i++) {
     vec2[i] = Gear{i + 1, {(i + 1) * 20, (i + 1) * 22}};
   }
@@ -54,6 +65,7 @@ void test_save_config() {
 
 void setup() {
   UNITY_BEGIN();
+  RUN_TEST(test_gear_vec);
   RUN_TEST(test_save_gear);
   RUN_TEST(test_save_config);
   UNITY_END();
