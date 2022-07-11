@@ -52,7 +52,9 @@ void Memory::save_config(const GearVec &servo1, const GearVec &servo2) {
  * @return configuration of motor1
  */
 GearVec Memory::load_config_servo1() {
-  auto vec = GearVec{MAX_GEAR};
+  auto vec = GearVec{};
+
+  vec.fill();
 
   prefs.begin("config_servo1", false);
   if (prefs.isKey("config_servo1") &&
@@ -70,7 +72,9 @@ GearVec Memory::load_config_servo1() {
  */
 
 GearVec Memory::load_config_servo2() {
-  auto vec = GearVec{MAX_GEAR};
+  auto vec = GearVec{};
+
+  vec.fill();
 
   prefs.begin("config_servo2", false);
   if (prefs.isKey("config_servo2") &&

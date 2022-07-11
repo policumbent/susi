@@ -1,8 +1,9 @@
 #pragma once
 
+#include <Arduino.h>
+
 #include "ArduinoJson.h"
 #include "AsyncJson.h"
-#include <Arduino.h>
 #include <ESPAsyncWebServer.h>
 
 // littlefs lib
@@ -65,6 +66,7 @@ template <> struct Converter<Gear> {
   }
 };
 
+
 template <> struct Converter<GearVec> {
   static void toJson(const GearVec &src, JsonVariant dst) {
     for (auto i = 0; i < src.size(); i++) {
@@ -73,7 +75,7 @@ template <> struct Converter<GearVec> {
   }
 
   static GearVec fromJson(JsonVariantConst src) {
-    auto vec = GearVec{MAX_GEAR};
+    auto vec = GearVec{};
     for (auto i = 0; i < vec.size(); i++) {
       vec[i] = Gear{src[i]};
     }
@@ -86,11 +88,12 @@ template <> struct Converter<GearVec> {
     }
 
     for (auto i = 0; i < src.size(); i++) {
-      if (!src[i].is<Gear>() || src[i].as<Gear>().id != i + 1) {
+      if (!src[i].is<Gear>() || src[i].as<Gear>().id != i+1) {
         return false;
       }
     }
     return true;
   }
 };
+
 } // namespace ARDUINOJSON_NAMESPACE

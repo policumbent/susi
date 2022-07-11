@@ -1,8 +1,9 @@
 #pragma once
 
-#include "Gear.h"
 #include <Arduino.h>
 #include <Preferences.h>
+
+#include "Gear.h"
 
 /**
  * Gear information saved on memory
