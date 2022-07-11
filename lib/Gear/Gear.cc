@@ -13,3 +13,9 @@ uint Gear::shift_up() const { return this->pos.up; }
  * @return position
  */
 uint Gear::shift_down() const { return this->pos.down; }
+
+void GearVec::fill() {
+  for (uint i=0; i<MAX_GEAR; i++){
+    (*this)[i].id = i+1;
+  }
+}

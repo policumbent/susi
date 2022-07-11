@@ -1,9 +1,9 @@
 #pragma once
 
 #include <Arduino.h>
+#include <vector>
 
 const uint8_t MIN_GEAR = 1;
-const uint8_t MAX_GEAR = 11;
 
 /**
  * Define the relative position of the servo
@@ -34,5 +34,16 @@ public:
   uint shift_down() const;
 };
 
-// aliasing a vector of Gear
-using GearVec = std::vector<Gear>;
+/**
+ * Define a vector of gear
+ */
+class GearVec : public std::vector<Gear>{
+public:
+  GearVec(): std::vector<Gear>(MAX_GEAR){};
+  ~GearVec()=default;
+
+  /**
+   * Fill `id` field of the `Gear` object in `id-1` vec position
+   */
+  void fill();
+};

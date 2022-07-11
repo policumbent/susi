@@ -10,8 +10,8 @@ auto btn_shift_down = BfButton(BfButton::STANDALONE_DIGITAL, 14, true, LOW);
 auto servo1 = TServo{26, 96, false, 700, 2191};
 auto servo2 = TServo{27, 20, true, 800, 2200};
 
-auto vec_servo1 = GearVec{MAX_GEAR};
-auto vec_servo2 = GearVec{MAX_GEAR};
+auto vec_servo1 = GearVec{};
+auto vec_servo2 = GearVec{};
 auto cal = Calibration{&vec_servo1, &vec_servo2};
 
 uint8_t current_gear_id = 0;
