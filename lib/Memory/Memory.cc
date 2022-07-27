@@ -1,6 +1,14 @@
 #include "Memory.h"
+#include <mutex>
 
 Preferences prefs;
+
+/**
+ * This namespace is accessed from the `Calibration` server with an async thread
+ * and from the main loop for the feedback value save, so a kind of
+ * synchronization is needed, because `Preferences` can be accessed one by one
+ */
+std::mutex m;
 
 /**
  * Save last used gear for the next startup
@@ -8,6 +16,8 @@ Preferences prefs;
  * @param value gear to save
  */
 void Memory::save_gear(const MemGear &value) {
+  std::lock_guard<std::mutex> l(m);
+
   prefs.begin("last_gear", false);
   prefs.putBytes("last_gear", &value, sizeof(value));
   prefs.end();
@@ -20,6 +30,8 @@ void Memory::save_gear(const MemGear &value) {
  * @return last used gear
  */
 MemGear Memory::load_gear() {
+  std::lock_guard<std::mutex> l(m);
+
   auto last = MemGear{};
 
   prefs.begin("last_gear", false);
@@ -37,6 +49,8 @@ MemGear Memory::load_gear() {
  * @param updated configuration
  */
 void Memory::save_config(const GearVec &servo1, const GearVec &servo2) {
+  std::lock_guard<std::mutex> l(m);
+
   prefs.begin("config_servo1", false);
   prefs.putBytes("config_servo1", servo1.data(), servo1.size() * sizeof(Gear));
   prefs.end();
@@ -52,6 +66,8 @@ void Memory::save_config(const GearVec &servo1, const GearVec &servo2) {
  * @return configuration of motor1
  */
 GearVec Memory::load_config_servo1() {
+  std::lock_guard<std::mutex> l(m);
+
   auto vec = GearVec{};
 
   vec.fill();
@@ -72,6 +88,8 @@ GearVec Memory::load_config_servo1() {
  */
 
 GearVec Memory::load_config_servo2() {
+  std::lock_guard<std::mutex> l(m);
+
   auto vec = GearVec{};
 
   vec.fill();
