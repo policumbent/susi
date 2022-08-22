@@ -45,21 +45,19 @@ void IRAM_ATTR btn_callback(BfButton *btn, BfButton::press_pattern_t pattern) {
 void setup() {
   delay(500); // debouncing
 
-  Serial.begin(115200);
-
   // button logic
   btn_shift_up.onPress(btn_callback).onPressFor(btn_callback, 3000);
   btn_shift_down.onPress(btn_callback);
 
-  // retrive configuration
+  // retrieve configuration
   vec_servo1 = Memory::load_config_servo1();
   vec_servo2 = Memory::load_config_servo2();
 
-  // retrive last gear
+  // retrieve last gear
   auto last_gear = Memory::load_gear();
   current_gear_id = last_gear.id;
 
-  // retrive last position of the servo
+  // retrieve last position of the servo
   servo1.move_to(last_gear.pos_servo1);
   servo2.move_to(last_gear.pos_servo2);
 }

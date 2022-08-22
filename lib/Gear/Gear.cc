@@ -1,14 +1,14 @@
 #include "Gear.h"
 
 /**
- * Retrive low->high gear position
+ * Retrieve low->high gear position
  *
  * @return position
  */
 uint Gear::shift_up() const { return this->pos.up; }
 
 /**
- * Retrive high->low gear position
+ * Retrieve high->low gear position
  *
  * @return position
  */

@@ -7,6 +7,13 @@ TServo::TServo(uint8_t pin, int offset, bool reversed, int minPulseWidth, int ma
 void TServo::move_to(uint pos) {
   auto position = static_cast<int>(_offset+pos);
 
+  // check position value
+  if (position > 180){
+    position = 180;
+  }else if(position < 0){
+    position = 0;
+  }
+
   if(_reversed){
     _servo.write(180 - position);
   }else{

@@ -24,7 +24,7 @@ void Memory::save_gear(const MemGear &value) {
 }
 
 /**
- * Retrive last used gear
+ * Retrieve last used gear
  *
  * On startup this is the current configuration of the physical gear
  * @return last used gear
@@ -61,7 +61,7 @@ void Memory::save_config(const GearVec &servo1, const GearVec &servo2) {
 }
 
 /**
- * Retrive gears configuration
+ * Retrieve gears configuration
  *
  * @return configuration of motor1
  */
@@ -82,7 +82,7 @@ GearVec Memory::load_config_servo1() {
   return vec;
 }
 /**
- * Retrive gears configuration
+ * Retrieve gears configuration
  *
  * @return configuration of motor2
  */
