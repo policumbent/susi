@@ -7,8 +7,8 @@
 
 auto btn_shift_up = BfButton(BfButton::STANDALONE_DIGITAL, 12, true, LOW);
 auto btn_shift_down = BfButton(BfButton::STANDALONE_DIGITAL, 14, true, LOW);
-auto servo1 = TServo{26, 96, false, 700, 2191};
-auto servo2 = TServo{27, 20, true, 800, 2200};
+auto servo1 = TServo{26, 80, false, 700, 2191};
+auto servo2 = TServo{27, 25, true, 800, 2200};
 
 auto vec_servo1 = GearVec{};
 auto vec_servo2 = GearVec{};
