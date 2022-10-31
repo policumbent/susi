@@ -26,6 +26,7 @@ void IRAM_ATTR btn_callback(BfButton *btn, BfButton::press_pattern_t pattern) {
 
     servo1.move_to(pos1);
     servo2.move_to(pos2);
+
     Memory::save_gear(MemGear{id, pos1, pos2});
   } else if (btn->getID() == btn_shift_up.getID() &&
              pattern == BfButton::SINGLE_PRESS && current_gear_id < MAX_GEAR) {
@@ -36,6 +37,7 @@ void IRAM_ATTR btn_callback(BfButton *btn, BfButton::press_pattern_t pattern) {
 
     servo1.move_to(pos1);
     servo2.move_to(pos2);
+
     Memory::save_gear(MemGear{id, pos1, pos2});
   } else if (btn->getID() == btn_shift_up.getID() && pattern == BfButton::LONG_PRESS) {
     cal.isActive() ? cal.end() : cal.begin();
@@ -43,7 +45,8 @@ void IRAM_ATTR btn_callback(BfButton *btn, BfButton::press_pattern_t pattern) {
 }
 
 void setup() {
-  delay(500); // debouncing
+  // debouncing
+  delay(500);
 
   // button logic
   btn_shift_up.onPress(btn_callback).onPressFor(btn_callback, 3000);

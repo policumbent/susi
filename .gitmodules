@@ -1,4 +1,4 @@
 [submodule "ui"]
 	path = ui
 	url = https://github.com/policumbent/policumbent-gear-ui
-	branch = v0.1.0
+	rev = v0.2.0
